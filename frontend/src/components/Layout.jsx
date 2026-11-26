@@ -1,0 +1,19 @@
+import { Outlet } from 'react-router-dom';
+import Header from './Header.jsx';
+
+export default function Layout() {
+  return (
+    <>
+      <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+      <Header />
+      <main id="conteudo" className="site-main">
+        <Outlet />
+      </main>
+      <footer className="site-footer">
+        <div className="container">
+          <p>GEA | Chapa Connecta. Grêmio Estudantil.</p>
+        </div>
+      </footer>
+    </>
+  );
+}
