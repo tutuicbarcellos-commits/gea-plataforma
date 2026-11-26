@@ -3,6 +3,7 @@ import { Newspaper, CalendarPlus, Megaphone, Building2, Save } from 'lucide-reac
 import { supabase } from '../lib/supabase.js';
 import Feedback from '../components/Feedback.jsx';
 import { CATEGORIAS } from './CalendarPage.jsx';
+import ListaGerenciavel from '../components/ListaGerenciavel.jsx';
 
 const sucesso = (texto) => ({ tipo: 'sucesso', texto });
 const erro = (texto) => ({ tipo: 'erro', texto });
@@ -177,6 +178,14 @@ export default function AdminPage() {
         <EventoForm />
         <ComunicadoForm />
         <CoordenacaoForm />
+      </div>
+
+      <h2 className="section-gap">Gerenciar conteúdos</h2>
+      <p className="muted">Publique ou oculte itens, ou exclua o que não for mais necessário.</p>
+      <div className="admin-grid">
+        <ListaGerenciavel titulo="Notícias" tabela="noticias" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
+        <ListaGerenciavel titulo="Compromissos" tabela="eventos" campoTitulo="titulo" campoData="inicio" ordem="inicio" ascendente />
+        <ListaGerenciavel titulo="Comunicados" tabela="comunicados" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
       </div>
     </div>
   );

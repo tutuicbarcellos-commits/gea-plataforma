@@ -82,3 +82,14 @@
 .article-body { white-space: pre-line; line-height: 1.7; }
 
 .grid-home .list-block strong { color: var(--color-text); }
+
+.demo-banner { display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--color-pink-light); color: var(--color-pink-strong); padding: .5rem 1rem; font-size: .85rem; font-weight: 600; text-align: center; }
+.manage-block { margin-bottom: 1rem; }
+.manage-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.manage-item { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .75rem; border: 1px solid var(--color-pink-light); border-radius: var(--radius-md); }
+.manage-info { display: grid; gap: .15rem; min-width: 0; }
+.manage-info strong { overflow-wrap: anywhere; }
+.manage-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+.icon-button-danger { color: var(--color-pink-strong); }
+.status-tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: .15rem .5rem; border-radius: 999px; background: #E4ECEF; color: var(--color-text-muted); width: fit-content; }
+.status-tag.is-live { background: #E6F9EE; color: #14532D; }

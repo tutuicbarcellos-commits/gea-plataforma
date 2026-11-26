@@ -1,0 +1,75 @@
+import { useState } from 'react';
+import { Eye, EyeOff, Trash2 } from 'lucide-react';
+import { supabase } from '../lib/supabase.js';
+import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
+import Feedback from './Feedback.jsx';
+
+const formatarData = (valor) =>
+  new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPublicado, campoData, ordem, ascendente = false }) {
+  const [versao, setVersao] = useState(0);
+  const [status, setStatus] = useState(null);
+
+  const { data, loading, error } = useSupabaseQuery(
+    () => supabase.from(tabela).select('*').order(ordem, { ascending: ascendente }),
+    [tabela, versao],
+  );
+  const itens = data ?? [];
+
+  async function alternarPublicacao(item) {
+    const novo = !item[campoPublicado];
+    const alteracao = { [campoPublicado]: novo };
+    if (tabela === 'noticias' && novo && !item.publicado_em) {
+      alteracao.publicado_em = new Date().toISOString();
+    }
+    const { error: falha } = await supabase.from(tabela).update(alteracao).eq('id', item.id);
+    if (falha) return setStatus({ tipo: 'erro', texto: 'Não foi possível alterar a publicação.' });
+    setStatus({ tipo: 'sucesso', texto: novo ? 'Item publicado.' : 'Item ocultado do site.' });
+    setVersao((v) => v + 1);
+  }
+
+  async function excluir(item) {
+    const confirmado = window.confirm(`Excluir "${item[campoTitulo]}"? Esta ação não pode ser desfeita.`);
+    if (!confirmado) return;
+    const { error: falha } = await supabase.from(tabela).delete().eq('id', item.id);
+    if (falha) return setStatus({ tipo: 'erro', texto: 'Não foi possível excluir o item.' });
+    setStatus({ tipo: 'sucesso', texto: 'Item excluído.' });
+    setVersao((v) => v + 1);
+  }
+
+  return (
+    <section className="card manage-block" aria-labelledby={`gerenciar-${tabela}`}>
+      <h2 id={`gerenciar-${tabela}`}>{titulo}</h2>
+      {loading && <p className="muted">Carregando...</p>}
+      {error && <p className="feedback feedback-erro">Não foi possível carregar os itens.</p>}
+      {!loading && !error && itens.length === 0 && <p className="muted">Nenhum item cadastrado.</p>}
+      <ul className="manage-list">
+        {itens.map((item) => (
+          <li key={item.id} className="manage-item">
+            <div className="manage-info">
+              <strong>{item[campoTitulo]}</strong>
+              <span className="muted">{formatarData(item[campoData])}</span>
+              {campoPublicado && (
+                <span className={`status-tag ${item[campoPublicado] ? 'is-live' : ''}`}>
+                  {item[campoPublicado] ? 'Publicado' : 'Oculto'}
+                </span>
+              )}
+            </div>
+            <div className="manage-actions">
+              {campoPublicado && (
+                <button type="button" className="icon-button" aria-label={item[campoPublicado] ? `Ocultar ${item[campoTitulo]}` : `Publicar ${item[campoTitulo]}`} onClick={() => alternarPublicacao(item)}>
+                  {item[campoPublicado] ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                </button>
+              )}
+              <button type="button" className="icon-button icon-button-danger" aria-label={`Excluir ${item[campoTitulo]}`} onClick={() => excluir(item)}>
+                <Trash2 size={18} aria-hidden="true" />
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <Feedback status={status} />
+    </section>
+  );
+}
