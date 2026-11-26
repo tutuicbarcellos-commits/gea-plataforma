@@ -53,7 +53,7 @@ export default function HomePage() {
           {eventos.loading && <p className="muted">Carregando...</p>}
           {eventos.error && <p className="error-text">Não foi possível carregar os compromissos.</p>}
           {!eventos.loading && !eventos.error && eventos.data.length === 0 && (
-            <EmptyState icon={Inbox} title="Nenhum compromisso previsto" text="Os próximos eventos e avaliações aparecerão aqui." />
+            <EmptyState icon={Inbox} title="Nenhum compromisso cadastrado" text="Os próximos eventos e avaliações aparecerão aqui." />
           )}
           <ul className="list">
             {eventos.data?.map((item) => (
@@ -70,7 +70,7 @@ export default function HomePage() {
           {comunicados.loading && <p className="muted">Carregando...</p>}
           {comunicados.error && <p className="error-text">Não foi possível carregar os avisos.</p>}
           {!comunicados.loading && !comunicados.error && comunicados.data.length === 0 && (
-            <EmptyState icon={Inbox} title="Nenhum aviso no momento" text="Comunicados publicados pelo Grêmio aparecerão aqui." />
+            <EmptyState icon={Inbox} title="Nenhum aviso cadastrado" text="Comunicados publicados pelo Grêmio aparecerão aqui." />
           )}
           <ul className="list">
             {comunicados.data?.map((item) => (

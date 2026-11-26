@@ -53,7 +53,7 @@ export default function StudentAreaPage() {
           <h2 id="proximas-titulo">Próximos compromissos</h2>
           {proximos.loading && <p className="muted">Carregando...</p>}
           {!proximos.loading && eventos.length === 0 && (
-            <EmptyState icon={Inbox} title="Nada previsto por enquanto" text="Os próximos compromissos aparecerão aqui." />
+            <EmptyState icon={Inbox} title="Nenhum compromisso cadastrado" text="Os próximos compromissos aparecerão aqui." />
           )}
           <ul className="list">
             {eventos.map((e) => (
@@ -69,7 +69,7 @@ export default function StudentAreaPage() {
           <h2 id="avaliacoes-titulo">Próximas avaliações</h2>
           {proximos.loading && <p className="muted">Carregando...</p>}
           {!proximos.loading && avaliacoes.length === 0 && (
-            <EmptyState icon={Inbox} title="Nenhuma avaliação prevista" />
+            <EmptyState icon={Inbox} title="Nenhuma avaliação cadastrada" />
           )}
           <ul className="list">
             {avaliacoes.map((e) => (
@@ -85,7 +85,7 @@ export default function StudentAreaPage() {
           <h2 id="avisos-titulo">Avisos importantes</h2>
           {avisos.loading && <p className="muted">Carregando...</p>}
           {!avisos.loading && (avisos.data ?? []).length === 0 && (
-            <EmptyState icon={Inbox} title="Nenhum aviso no momento" />
+            <EmptyState icon={Inbox} title="Nenhum aviso cadastrado" />
           )}
           <ul className="list">
             {(avisos.data ?? []).map((a) => (

@@ -72,7 +72,7 @@ export default function CoordenacaoPage() {
           <h2 id="contato-titulo">Informações de contato</h2>
           {contato.loading && <p className="muted">Carregando...</p>}
           {!contato.loading && !temContato && (
-            <EmptyState icon={Inbox} title="Informações ainda não publicadas" text="A administração do colégio publicará os contatos e horários aqui." />
+            <EmptyState icon={Inbox} title="Informações não cadastradas" text="Os contatos e horários serão exibidos aqui quando forem cadastrados pela administração." />
           )}
           {temContato && (
             <ul className="list">
@@ -90,7 +90,7 @@ export default function CoordenacaoPage() {
         <h2 id="comunicados-titulo"><Megaphone size={20} aria-hidden="true" /> Comunicados da coordenação</h2>
         {comunicados.loading && <p className="muted">Carregando...</p>}
         {!comunicados.loading && (comunicados.data ?? []).length === 0 && (
-          <EmptyState icon={Inbox} title="Nenhum comunicado publicado" />
+          <EmptyState icon={Inbox} title="Nenhum comunicado cadastrado" />
         )}
         <ul className="list">
           {(comunicados.data ?? []).map((c) => (

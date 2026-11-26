@@ -186,7 +186,7 @@ export default function CalendarPage() {
 
       {!loading && !error && visao === 'lista' && (
         eventos.length === 0 ? (
-          <EmptyState icon={CalendarDays} title="Nenhum compromisso neste período" text="Use as setas para navegar entre os meses." />
+          <EmptyState icon={CalendarDays} title="Nenhum compromisso cadastrado neste período" text="Use as setas para navegar entre os meses." />
         ) : (
           <ul className="event-list">
             {eventos.map((e) => (
