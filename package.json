@@ -1,0 +1,7 @@
+{
+  "name": "gea-plataforma",
+  "private": true,
+  "description": "Plataforma digital do Grêmio Estudantil (GEA) - Chapa Connecta",
+  "workspaces": ["backend", "frontend"],
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,38 @@
+/* Paleta extraida diretamente do arquivo da logo da Chapa Connecta.
+   Cores de texto e de botoes usam tons mais escuros para garantir contraste de leitura. */
+:root {
+  /* Cores da marca */
+  --color-turquoise: #46C6E0;        /* azul-turquesa, cor principal da marca */
+  --color-turquoise-strong: #0E7C95; /* variacao escura para textos e links sobre fundo claro */
+  --color-turquoise-deep: #22A0C6;   /* contornos e detalhes */
+  --color-pink: #F362AA;             /* rosa pink, cor secundaria */
+  --color-pink-strong: #C2357F;      /* variacao escura para textos e estados de foco */
+  --color-pink-light: #FDCCE1;       /* rosa-claro, fundos e detalhes */
+  --color-yellow: #FADF44;           /* amarelo, destaques */
+  --color-sky: #9EEAF0;              /* fundo azul-claro da logo */
+  --color-white: #FFFFFF;
+
+  /* Texto e superficies */
+  --color-text: #1B3A4B;
+  --color-text-muted: #4B6573;
+  --color-surface: #FFFFFF;
+  --color-background: #F4FDFE;
+
+  /* Forma, sombra e movimento */
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-card: 0 4px 16px rgba(27, 58, 75, 0.08);
+  --transition-base: 200ms ease-out;
+
+  /* Tipografia */
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-background);
+}
