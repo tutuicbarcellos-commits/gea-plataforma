@@ -3,8 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 const url = import.meta.env.VITE_SUPABASE_URL;
 const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-if (!url || !publishableKey) {
-  throw new Error('Variaveis do Supabase nao configuradas no frontend.');
-}
+export const configuracaoOk = Boolean(url && publishableKey);
 
-export const supabase = createClient(url, publishableKey);
+export const supabase = configuracaoOk ? createClient(url, publishableKey) : null;

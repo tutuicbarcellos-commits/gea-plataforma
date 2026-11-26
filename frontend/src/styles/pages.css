@@ -93,3 +93,6 @@
 .icon-button-danger { color: var(--color-pink-strong); }
 .status-tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: .15rem .5rem; border-radius: 999px; background: #E4ECEF; color: var(--color-text-muted); width: fit-content; }
 .status-tag.is-live { background: #E6F9EE; color: #14532D; }
+
+.fallback { max-width: 560px; margin: 4rem auto; padding: 2rem; background: var(--color-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.fallback h1 { font-size: 1.4rem; color: var(--color-pink-strong); }
