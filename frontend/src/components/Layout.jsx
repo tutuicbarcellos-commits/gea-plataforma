@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import DemoBanner from './DemoBanner.jsx';
+import CookieNotice from './CookieNotice.jsx';
 
 export default function Layout() {
   return (
@@ -11,11 +13,8 @@ export default function Layout() {
       <main id="conteudo" className="site-main">
         <Outlet />
       </main>
-      <footer className="site-footer">
-        <div className="container">
-          <p>GEA | Chapa Connecta. Grêmio Estudantil.</p>
-        </div>
-      </footer>
+      <Footer />
+      <CookieNotice />
     </>
   );
 }

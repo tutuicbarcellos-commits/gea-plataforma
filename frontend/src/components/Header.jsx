@@ -7,6 +7,7 @@ const links = [
   { to: '/', label: 'Início' },
   { to: '/calendario', label: 'Calendário' },
   { to: '/jornal', label: 'Jornal do GEA' },
+  { to: '/projetos', label: 'Projetos' },
   { to: '/coordenacao', label: 'Coordenação' },
   { to: '/area-do-estudante', label: 'Área do estudante' },
 ];

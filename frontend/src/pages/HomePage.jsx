@@ -6,6 +6,8 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { CATEGORIAS } from '../lib/categorias.js';
 import EmptyState from '../components/EmptyState.jsx';
+import TiltLink from '../components/TiltLink.jsx';
+import { SkeletonLines } from '../components/Skeleton.jsx';
 import HeroIllustration from '../components/HeroIllustration.jsx';
 import '../styles/home.css';
 
@@ -64,19 +66,19 @@ export default function HomePage() {
 
       <nav className="home-shortcuts" aria-label="Atalhos principais">
         {ATALHOS.map(({ to, rotulo, Icone, classe }) => (
-          <Link key={to} to={to} className="home-shortcut">
+          <TiltLink key={to} to={to} className="home-shortcut tilt">
             <span className={`home-shortcut-icon ${classe}`}>
               <Icone size={20} aria-hidden="true" />
             </span>
             {rotulo}
-          </Link>
+          </TiltLink>
         ))}
       </nav>
 
       <div className="home-grid">
         <section className="home-panel" aria-labelledby="titulo-proximos">
           <h2 id="titulo-proximos">Próximos compromissos</h2>
-          {eventos.loading && <p className="muted">Carregando...</p>}
+          {eventos.loading && <SkeletonLines linhas={3} />}
           {eventos.error && <p className="feedback feedback-erro">Não foi possível carregar os compromissos.</p>}
           {!eventos.loading && !eventos.error && (eventos.data ?? []).length === 0 && (
             <EmptyState icon={Inbox} title="Nenhum compromisso cadastrado" text="Os próximos eventos e avaliações aparecerão aqui." />
@@ -93,7 +95,7 @@ export default function HomePage() {
 
         <section className="home-panel" aria-labelledby="titulo-avisos">
           <h2 id="titulo-avisos">Avisos importantes</h2>
-          {comunicados.loading && <p className="muted">Carregando...</p>}
+          {comunicados.loading && <SkeletonLines linhas={2} />}
           {comunicados.error && <p className="feedback feedback-erro">Não foi possível carregar os avisos.</p>}
           {!comunicados.loading && !comunicados.error && (comunicados.data ?? []).length === 0 && (
             <EmptyState icon={Inbox} title="Nenhum aviso cadastrado" text="Comunicados publicados pelo Grêmio aparecerão aqui." />
@@ -111,7 +113,7 @@ export default function HomePage() {
             <h2 id="titulo-noticias">Últimas notícias do GEA</h2>
             <Link to="/jornal" className="home-link">Ver todas</Link>
           </div>
-          {noticias.loading && <p className="muted">Carregando...</p>}
+          {noticias.loading && <SkeletonLines linhas={3} />}
           {noticias.error && <p className="feedback feedback-erro">Não foi possível carregar as notícias.</p>}
           {!noticias.loading && !noticias.error && (noticias.data ?? []).length === 0 && (
             <EmptyState icon={Newspaper} title="Nenhuma notícia publicada" text="As novidades do Jornal do GEA aparecerão aqui." />

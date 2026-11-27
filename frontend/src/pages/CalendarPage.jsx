@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import EmptyState from '../components/EmptyState.jsx';
+import { SkeletonLines } from '../components/Skeleton.jsx';
 import { CATEGORIAS } from '../lib/categorias.js';
 
 const DIAS_SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -128,7 +129,7 @@ export default function CalendarPage() {
         ))}
       </ul>
 
-      {loading && <p className="muted">Carregando compromissos...</p>}
+      {loading && <SkeletonLines linhas={4} />}
       {error && <p className="feedback feedback-erro">Não foi possível carregar o calendário.</p>}
 
       {!loading && !error && visao === 'mes' && (

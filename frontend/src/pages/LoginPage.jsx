@@ -53,6 +53,7 @@ export default function LoginPage() {
   return (
     <div className="container narrow">
       <div className="card">
+        <img src="/logo-chapa-connecta.webp" width="600" height="573" alt="Logo da Chapa Connecta" className="login-logo" />
         <div className="segmented" role="group" aria-label="Escolha a ação">
           <button type="button" className={`segment ${modo === 'entrar' ? 'is-active' : ''}`} aria-pressed={modo === 'entrar'} onClick={() => setModo('entrar')}>
             Entrar

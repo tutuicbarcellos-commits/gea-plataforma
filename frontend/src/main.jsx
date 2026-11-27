@@ -9,6 +9,8 @@ import { configuracaoOk } from './lib/supabase.js';
 import './styles/tokens.css';
 import './styles/app.css';
 import './styles/pages.css';
+import './styles/home.css';
+import './styles/system.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

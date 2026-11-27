@@ -4,6 +4,7 @@ import { Newspaper } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import EmptyState from '../components/EmptyState.jsx';
+import { SkeletonLines } from '../components/Skeleton.jsx';
 
 const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -21,7 +22,7 @@ export default function JornalPage() {
       <h1>Jornal do GEA</h1>
       <p className="muted">Notícias do colégio, comunicados do Grêmio, projetos e eventos.</p>
 
-      {loading && <p className="muted">Carregando notícias...</p>}
+      {loading && <SkeletonLines linhas={4} />}
       {error && <p className="feedback feedback-erro">Não foi possível carregar o jornal.</p>}
       {!loading && !error && noticias.length === 0 && (
         <EmptyState icon={Newspaper} title="Nenhuma notícia publicada" text="As novidades aparecerão aqui assim que forem publicadas." />

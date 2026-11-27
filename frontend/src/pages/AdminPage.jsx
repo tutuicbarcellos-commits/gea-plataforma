@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase.js';
 import Feedback from '../components/Feedback.jsx';
 import { CATEGORIAS } from '../lib/categorias.js';
 import ListaGerenciavel from '../components/ListaGerenciavel.jsx';
+import { PropostaForm, ProjetoForm, ApresentacaoForm } from '../components/admin/FormulariosInstitucionais.jsx';
 
 const sucesso = (texto) => ({ tipo: 'sucesso', texto });
 const erro = (texto) => ({ tipo: 'erro', texto });
@@ -169,25 +170,66 @@ function CoordenacaoForm() {
   );
 }
 
+const SECOES = [
+  { id: 'publicar', rotulo: 'Publicar conteúdo' },
+  { id: 'institucional', rotulo: 'Páginas institucionais' },
+  { id: 'coordenacao', rotulo: 'Coordenação' },
+  { id: 'gerenciar', rotulo: 'Gerenciar itens' },
+];
+
 export default function AdminPage() {
   usePageMeta({ titulo: 'Painel administrativo', privada: true });
-  return (
-    <div className="container">
-      <h1>Painel administrativo</h1>
-      <p className="muted">Área restrita. As alterações aparecem no site assim que forem salvas.</p>
-      <div className="admin-grid">
-        <NoticiaForm />
-        <EventoForm />
-        <ComunicadoForm />
-        <CoordenacaoForm />
-      </div>
 
-      <h2 className="section-gap">Gerenciar conteúdos</h2>
-      <p className="muted">Publique ou oculte itens, ou exclua o que não for mais necessário.</p>
-      <div className="admin-grid">
-        <ListaGerenciavel titulo="Notícias" tabela="noticias" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
-        <ListaGerenciavel titulo="Compromissos" tabela="eventos" campoTitulo="titulo" campoData="inicio" ordem="inicio" ascendente />
-        <ListaGerenciavel titulo="Comunicados" tabela="comunicados" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
+  return (
+    <div className="container admin-shell">
+      <aside className="admin-nav" aria-label="Seções do painel">
+        <ul>
+          {SECOES.map((secao) => (
+            <li key={secao.id}><a href={`#${secao.id}`}>{secao.rotulo}</a></li>
+          ))}
+        </ul>
+      </aside>
+
+      <div className="admin-content">
+        <h1>Painel administrativo</h1>
+        <p className="muted">Área restrita. As alterações aparecem no site assim que forem salvas.</p>
+
+        <section id="publicar" className="admin-section" aria-labelledby="t-publicar">
+          <h2 id="t-publicar" className="section-title">Publicar conteúdo</h2>
+          <div className="admin-grid">
+            <NoticiaForm />
+            <EventoForm />
+            <ComunicadoForm />
+          </div>
+        </section>
+
+        <section id="institucional" className="admin-section" aria-labelledby="t-institucional">
+          <h2 id="t-institucional" className="section-title">Páginas institucionais</h2>
+          <div className="admin-grid">
+            <ApresentacaoForm />
+            <PropostaForm />
+            <ProjetoForm />
+          </div>
+        </section>
+
+        <section id="coordenacao" className="admin-section" aria-labelledby="t-coordenacao">
+          <h2 id="t-coordenacao" className="section-title">Coordenação</h2>
+          <div className="admin-grid">
+            <CoordenacaoForm />
+          </div>
+        </section>
+
+        <section id="gerenciar" className="admin-section" aria-labelledby="t-gerenciar">
+          <h2 id="t-gerenciar" className="section-title">Gerenciar itens</h2>
+          <p className="muted">Publique ou oculte itens, ou exclua o que não for mais necessário.</p>
+          <div className="admin-grid">
+            <ListaGerenciavel titulo="Notícias" tabela="noticias" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
+            <ListaGerenciavel titulo="Compromissos" tabela="eventos" campoTitulo="titulo" campoData="inicio" ordem="inicio" ascendente />
+            <ListaGerenciavel titulo="Comunicados" tabela="comunicados" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
+            <ListaGerenciavel titulo="Propostas" tabela="propostas" campoTitulo="titulo" campoPublicado="publicada" campoData="criado_em" ordem="criado_em" />
+            <ListaGerenciavel titulo="Projetos" tabela="projetos" campoTitulo="titulo" campoPublicado="publicado" campoData="criado_em" ordem="criado_em" />
+          </div>
+        </section>
       </div>
     </div>
   );
