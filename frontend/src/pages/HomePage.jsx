@@ -1,3 +1,4 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { Link } from 'react-router-dom';
 import { CalendarDays, Newspaper, Megaphone, ClipboardList, ArrowRight, Inbox } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
@@ -8,6 +9,7 @@ const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
 
 export default function HomePage() {
+  usePageMeta({ titulo: 'Início', descricao: 'Painel do Grêmio Estudantil com compromissos, avisos e notícias da Chapa Connecta.' });
   const agora = new Date().toISOString();
 
   const eventos = useSupabaseQuery(

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /area-do-estudante
+Disallow: /entrar
+
+Sitemap: https://gea-plataforma.vercel.app/sitemap.xml

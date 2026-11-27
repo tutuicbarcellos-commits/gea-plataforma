@@ -1,16 +1,10 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import EmptyState from '../components/EmptyState.jsx';
-
-export const CATEGORIAS = {
-  avaliacao: { rotulo: 'Avaliação', classe: 'cat-avaliacao' },
-  entrega: { rotulo: 'Entrega', classe: 'cat-entrega' },
-  evento: { rotulo: 'Evento', classe: 'cat-evento' },
-  atividade: { rotulo: 'Atividade', classe: 'cat-atividade' },
-  cronograma: { rotulo: 'Cronograma', classe: 'cat-cronograma' },
-};
+import { CATEGORIAS } from '../lib/categorias.js';
 
 const DIAS_SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 const MESES = [
@@ -56,6 +50,7 @@ const formatarDataLonga = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' });
 
 export default function CalendarPage() {
+  usePageMeta({ titulo: 'Calendário escolar', descricao: 'Avaliações, entregas, eventos e atividades do Grêmio Estudantil.' });
   const [visao, setVisao] = useState('mes');
   const [cursor, setCursor] = useState(() => new Date());
   const hoje = new Date();

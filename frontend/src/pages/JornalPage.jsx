@@ -1,3 +1,4 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { Link } from 'react-router-dom';
 import { Newspaper } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
@@ -8,6 +9,7 @@ const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 
 export default function JornalPage() {
+  usePageMeta({ titulo: 'Jornal do GEA', descricao: 'Notícias, comunicados, projetos e eventos publicados pelo Grêmio Estudantil.' });
   const { data, loading, error } = useSupabaseQuery(
     () => supabase.from('noticias').select('*').eq('publicado', true).order('publicado_em', { ascending: false }),
     [],

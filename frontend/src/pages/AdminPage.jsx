@@ -1,8 +1,9 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useEffect, useState } from 'react';
 import { Newspaper, CalendarPlus, Megaphone, Building2, Save } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import Feedback from '../components/Feedback.jsx';
-import { CATEGORIAS } from './CalendarPage.jsx';
+import { CATEGORIAS } from '../lib/categorias.js';
 import ListaGerenciavel from '../components/ListaGerenciavel.jsx';
 
 const sucesso = (texto) => ({ tipo: 'sucesso', texto });
@@ -169,6 +170,7 @@ function CoordenacaoForm() {
 }
 
 export default function AdminPage() {
+  usePageMeta({ titulo: 'Painel administrativo', privada: true });
   return (
     <div className="container">
       <h1>Painel administrativo</h1>

@@ -1,3 +1,4 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, SearchX } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
@@ -8,6 +9,7 @@ const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 
 export default function NoticiaPage() {
+  usePageMeta({ titulo: 'Notícia' });
   const { id } = useParams();
   const { data, loading, error } = useSupabaseQuery(
     () => supabase.from('noticias').select('*').eq('id', id).eq('publicado', true),

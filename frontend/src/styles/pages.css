@@ -9,7 +9,7 @@
 
 .field { display: grid; gap: .35rem; margin-bottom: 1rem; }
 .field label { font-weight: 600; font-size: .95rem; }
-.field input, .field textarea, .field select { font: inherit; padding: .7rem .85rem; border: 1px solid #C9E6EC; border-radius: var(--radius-md); background: var(--color-white); color: var(--color-text); }
+.field input, .field textarea, .field select { font: inherit; padding: .7rem .85rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-white); color: var(--color-text); }
 .field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible { outline: 3px solid var(--color-yellow); outline-offset: 1px; border-color: var(--color-turquoise-strong); }
 .checkbox { display: flex; align-items: center; gap: .5rem; margin-bottom: 1rem; }
 .admin-form h2 { display: flex; gap: .5rem; align-items: center; }
@@ -36,11 +36,11 @@
 .legend li { display: flex; align-items: center; gap: .4rem; }
 .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
-.cat-avaliacao { --cat: #F362AA; --cat-bg: #FDCCE1; }
-.cat-entrega { --cat: #22A0C6; --cat-bg: #D5F3FA; }
-.cat-evento { --cat: #C9A800; --cat-bg: #FFF6BF; }
-.cat-atividade { --cat: #7C4DFF; --cat-bg: #ECE4FF; }
-.cat-cronograma { --cat: #4B6573; --cat-bg: #E4ECEF; }
+.cat-avaliacao { --cat: #E45AA8; --cat-bg: #FCE4F1; }
+.cat-entrega { --cat: #20B5CE; --cat-bg: #DDF6FA; }
+.cat-evento { --cat: #B8900A; --cat-bg: #FFF4C2; }
+.cat-atividade { --cat: #244B68; --cat-bg: #E1EBF2; }
+.cat-cronograma { --cat: #5D7384; --cat-bg: #ECF1F4; }
 .legend-dot { background: var(--cat); }
 
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; background: var(--color-white); padding: 8px; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }

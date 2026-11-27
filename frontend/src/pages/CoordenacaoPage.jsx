@@ -1,3 +1,4 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useState } from 'react';
 import { Mail, Phone, Clock, Send, Megaphone, Inbox } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
@@ -54,6 +55,7 @@ function FormularioSugestao() {
 }
 
 export default function CoordenacaoPage() {
+  usePageMeta({ titulo: 'Coordenação Pedagógica', descricao: 'Contatos, horários de atendimento e comunicados da Coordenação Pedagógica.' });
   const contato = useSupabaseQuery(() => supabase.from('coordenacao').select('*').eq('id', 1), []);
   const comunicados = useSupabaseQuery(
     () => supabase.from('comunicados').select('*').eq('publicado', true).order('fixado', { ascending: false }).order('criado_em', { ascending: false }),

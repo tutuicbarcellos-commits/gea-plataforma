@@ -1,15 +1,17 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { Link } from 'react-router-dom';
 import { CalendarDays, Megaphone, ShieldCheck, Newspaper, Inbox } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import { useAuth } from '../hooks/useAuth.jsx';
-import { CATEGORIAS } from './CalendarPage.jsx';
+import { CATEGORIAS } from '../lib/categorias.js';
 import EmptyState from '../components/EmptyState.jsx';
 
 const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
 
 export default function StudentAreaPage() {
+  usePageMeta({ titulo: 'Área do estudante', privada: true });
   const { perfil, erroPerfil, session, eAdministrador } = useAuth();
   const agora = new Date().toISOString();
 

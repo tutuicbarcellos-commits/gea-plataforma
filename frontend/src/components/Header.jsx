@@ -26,7 +26,7 @@ export default function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand" aria-label="Página inicial da Chapa Connecta">
-          <img src="/logo-chapa-connecta.png" alt="Logo da Chapa Connecta" className="brand-logo" />
+          <img src="/logo-chapa-connecta.webp" width="600" height="573" alt="Logo da Chapa Connecta" className="brand-logo" />
         </Link>
 
         <button

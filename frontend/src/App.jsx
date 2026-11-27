@@ -1,30 +1,34 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import HomePage from './pages/HomePage.jsx';
-import CalendarPage from './pages/CalendarPage.jsx';
-import JornalPage from './pages/JornalPage.jsx';
-import NoticiaPage from './pages/NoticiaPage.jsx';
-import CoordenacaoPage from './pages/CoordenacaoPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import StudentAreaPage from './pages/StudentAreaPage.jsx';
-import AdminPage from './pages/AdminPage.jsx';
 import PlaceholderPage from './pages/PlaceholderPage.jsx';
+
+const CalendarPage = lazy(() => import('./pages/CalendarPage.jsx'));
+const JornalPage = lazy(() => import('./pages/JornalPage.jsx'));
+const NoticiaPage = lazy(() => import('./pages/NoticiaPage.jsx'));
+const CoordenacaoPage = lazy(() => import('./pages/CoordenacaoPage.jsx'));
+const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
+const StudentAreaPage = lazy(() => import('./pages/StudentAreaPage.jsx'));
+const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="calendario" element={<CalendarPage />} />
-        <Route path="jornal" element={<JornalPage />} />
-        <Route path="jornal/:id" element={<NoticiaPage />} />
-        <Route path="coordenacao" element={<CoordenacaoPage />} />
-        <Route path="entrar" element={<LoginPage />} />
-        <Route path="area-do-estudante" element={<RequireAuth><StudentAreaPage /></RequireAuth>} />
-        <Route path="admin" element={<RequireAuth admin><AdminPage /></RequireAuth>} />
-        <Route path="*" element={<PlaceholderPage titulo="Página não encontrada" />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<p className="muted container">Carregando...</p>}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="calendario" element={<CalendarPage />} />
+          <Route path="jornal" element={<JornalPage />} />
+          <Route path="jornal/:id" element={<NoticiaPage />} />
+          <Route path="coordenacao" element={<CoordenacaoPage />} />
+          <Route path="entrar" element={<LoginPage />} />
+          <Route path="area-do-estudante" element={<RequireAuth><StudentAreaPage /></RequireAuth>} />
+          <Route path="admin" element={<RequireAuth admin><AdminPage /></RequireAuth>} />
+          <Route path="*" element={<PlaceholderPage titulo="Página não encontrada" />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }

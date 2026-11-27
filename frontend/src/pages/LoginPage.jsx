@@ -1,3 +1,4 @@
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LogIn, UserPlus } from 'lucide-react';
@@ -13,6 +14,7 @@ const traduzirErro = (mensagem = '') => {
 };
 
 export default function LoginPage() {
+  usePageMeta({ titulo: 'Entrar', privada: true });
   const { entrar, cadastrar } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
