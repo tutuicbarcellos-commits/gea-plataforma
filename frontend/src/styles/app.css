@@ -2,15 +2,15 @@
 .site-main { min-height: 70vh; padding-block: 2rem; }
 
 .skip-link { position: absolute; left: -999px; }
-.skip-link:focus { left: 1rem; top: 1rem; background: var(--color-white); padding: .5rem 1rem; border-radius: var(--radius-md); z-index: 10; }
+.skip-link:focus { left: 1rem; top: 1rem; background: var(--color-surface-tint); padding: .5rem 1rem; border-radius: var(--radius-md); z-index: 10; }
 
-.site-header { background: var(--color-white); box-shadow: var(--shadow-card); position: sticky; top: 0; z-index: 5; }
+.site-header { background: var(--color-surface-tint); box-shadow: var(--shadow-card); position: sticky; top: 0; z-index: 5; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 72px; }
 .brand-logo { height: 52px; width: auto; display: block; }
 .menu-toggle { display: inline-flex; background: none; border: 0; padding: .5rem; cursor: pointer; color: var(--color-text); border-radius: var(--radius-md); }
 .menu-toggle:focus-visible, .nav-link:focus-visible, .button:focus-visible, .shortcut-card:focus-visible, .news-card:focus-visible, .text-link:focus-visible { outline: 3px solid var(--color-yellow); outline-offset: 2px; }
 
-.main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--color-white); flex-direction: column; padding: 1rem; box-shadow: var(--shadow-card); }
+.main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--color-surface-tint); flex-direction: column; padding: 1rem; box-shadow: var(--shadow-card); }
 .main-nav.is-open { display: flex; }
 .nav-link { padding: .75rem 1rem; border-radius: var(--radius-md); color: var(--color-text); text-decoration: none; font-weight: 600; transition: background var(--transition-base); }
 .nav-link:hover { background: var(--color-pink-light); }
@@ -33,14 +33,14 @@
 
 .shortcuts { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: 1.5rem; }
 @media (min-width: 900px) { .shortcuts { grid-template-columns: repeat(4, 1fr); } }
-.shortcut-card { display: flex; align-items: center; gap: .75rem; background: var(--color-white); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: var(--shadow-card); color: var(--color-text); text-decoration: none; font-weight: 600; transition: transform var(--transition-base); }
+.shortcut-card { display: flex; align-items: center; gap: .75rem; background: var(--color-surface-tint); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: var(--shadow-card); color: var(--color-text); text-decoration: none; font-weight: 600; transition: transform var(--transition-base); }
 .shortcut-card svg { color: var(--color-pink-strong); }
 .shortcut-card:hover { transform: translateY(-3px); }
 
 .grid-home { display: grid; gap: 1rem; }
 @media (min-width: 900px) { .grid-home { grid-template-columns: 1fr 1fr; } .card-wide { grid-column: 1 / -1; } }
 
-.card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 1.5rem; }
+.card { background: var(--color-surface-tint); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 1.5rem; }
 .card h2 { margin: 0 0 1rem; font-size: 1.2rem; color: var(--color-accent-strong); }
 .card-header { display: flex; justify-content: space-between; align-items: center; }
 .text-link { color: var(--color-pink-strong); font-weight: 600; }
@@ -65,7 +65,7 @@
 .muted { color: var(--color-text-muted); font-size: .95rem; }
 .error-text { color: var(--color-pink-strong); }
 
-.site-footer { background: var(--color-white); padding-block: 1.5rem; color: var(--color-text-muted); text-align: center; font-size: .9rem; }
+.site-footer { background: var(--color-surface-tint); padding-block: 1.5rem; color: var(--color-text-muted); text-align: center; font-size: .9rem; }
 
 /* Tipografia de titulos */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }

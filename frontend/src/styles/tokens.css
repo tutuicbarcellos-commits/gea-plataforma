@@ -19,8 +19,10 @@
 
   /* Superfícies e texto */
   --color-background: #EEFBFD;
+  --color-surface-tint: #E4F8FB;
+  --color-footer: #B9EDF6;
   --color-surface: #FFFFFF;
-  --color-border: #CFEEF4;
+  --color-border: #BDEBF3;
   --color-text: #244B68;
   --color-text-muted: #4A6478;
 
@@ -42,5 +44,6 @@ body {
   margin: 0;
   font-family: var(--font-family);
   color: var(--color-text);
-  background: var(--color-background);
+  background: linear-gradient(180deg, #D3F3F9 0%, #EEFBFD 45%, #E4F8FB 100%) fixed;
+  min-height: 100vh;
 }
