@@ -7,13 +7,15 @@ export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [perfil, setPerfil] = useState(null);
   const [carregando, setCarregando] = useState(true);
+  const [erroPerfil, setErroPerfil] = useState(null);
 
   const carregarPerfil = useCallback(async (userId) => {
     if (!userId) {
       setPerfil(null);
       return;
     }
-    const { data } = await supabase.from('perfis').select('*').eq('id', userId).maybeSingle();
+    const { data, error } = await supabase.from('perfis').select('*').eq('id', userId).maybeSingle();
+    setErroPerfil(error ? `${error.code ?? ''} ${error.message}`.trim() : null);
     setPerfil(data ?? null);
   }, []);
 
@@ -37,6 +39,7 @@ export function AuthProvider({ children }) {
   const value = {
     session,
     perfil,
+    erroPerfil,
     carregando,
     usuarioLogado: Boolean(session),
     eAdministrador: perfil?.papel === 'administrador',

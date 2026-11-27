@@ -10,7 +10,7 @@ const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
 
 export default function StudentAreaPage() {
-  const { perfil, session, eAdministrador } = useAuth();
+  const { perfil, erroPerfil, session, eAdministrador } = useAuth();
   const agora = new Date().toISOString();
 
   const proximos = useSupabaseQuery(
@@ -33,6 +33,8 @@ export default function StudentAreaPage() {
       <div className="grid-home">
         <section className="card" aria-labelledby="perfil-titulo">
           <h2 id="perfil-titulo">Meu perfil</h2>
+          {erroPerfil && <p className="feedback feedback-erro">Não foi possível carregar o perfil: {erroPerfil}</p>}
+          {!erroPerfil && !perfil && <p className="muted">Perfil não encontrado para esta conta.</p>}
           <ul className="list">
             <li><strong>Nome:</strong> {perfil?.nome}</li>
             <li><strong>Tipo de conta:</strong> {eAdministrador ? 'Administrador' : 'Estudante'}</li>
