@@ -122,7 +122,7 @@
 
 /* Dialogo de confirmacao */
 .confirm-dialog { border: 0; border-radius: var(--radius-lg); padding: 1.5rem; max-width: 420px; width: calc(100% - 2rem); color: var(--color-deep); box-shadow: var(--shadow-hover); }
-.confirm-dialog::backdrop { background: rgba(36, 75, 104, 0.35); }
+.confirm-dialog::backdrop { background: var(--color-backdrop); }
 .confirm-dialog h2 { margin: 0 0 .5rem; color: var(--color-deep); }
 .confirm-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: flex-end; margin-top: 1.25rem; }
 
