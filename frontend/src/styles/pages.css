@@ -141,3 +141,7 @@
 .shortcut-card svg { color: var(--color-pink-text); }
 .shortcut-card:hover { background: var(--color-surface-tint); }
 .shortcuts-inline { grid-template-columns: repeat(2, 1fr); }
+
+/* Upload de imagem de capa */
+.upload-preview { display: block; width: 100%; max-height: 200px; object-fit: cover; border-radius: var(--radius-md); margin: 0 0 1rem; border: 1px solid var(--color-border); }
+.field input[type="file"] { padding: .5rem; min-height: 44px; }

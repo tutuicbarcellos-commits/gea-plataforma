@@ -11,30 +11,83 @@ const sucesso = (texto) => ({ tipo: 'sucesso', texto });
 const erro = (texto) => ({ tipo: 'erro', texto });
 const paraISO = (valor) => (valor ? new Date(valor).toISOString() : null);
 
+const TIPOS_IMAGEM = ['image/jpeg', 'image/png', 'image/webp'];
+const LIMITE_IMAGEM = 2 * 1024 * 1024;
+
 function NoticiaForm() {
-  const vazio = { titulo: '', resumo: '', conteudo: '', imagem_url: '', publicado: true };
+  const vazio = { titulo: '', resumo: '', conteudo: '', publicado: true };
   const [dados, setDados] = useState(vazio);
+  const [arquivo, setArquivo] = useState(null);
+  const [previa, setPrevia] = useState(null);
   const [status, setStatus] = useState(null);
   const [enviando, setEnviando] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      if (previa) URL.revokeObjectURL(previa);
+    };
+  }, [previa]);
+
   const alterar = (campo) => (e) =>
     setDados({ ...dados, [campo]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
+
+  function escolherImagem(e) {
+    const escolhido = e.target.files?.[0];
+    setStatus(null);
+    if (!escolhido) {
+      setArquivo(null);
+      setPrevia(null);
+      return;
+    }
+    if (!TIPOS_IMAGEM.includes(escolhido.type)) {
+      e.target.value = '';
+      setStatus(erro('Use uma imagem nos formatos JPG, PNG ou WebP.'));
+      return;
+    }
+    if (escolhido.size > LIMITE_IMAGEM) {
+      e.target.value = '';
+      setStatus(erro('A imagem deve ter no máximo 2 MB.'));
+      return;
+    }
+    setArquivo(escolhido);
+    setPrevia(URL.createObjectURL(escolhido));
+  }
 
   async function enviar(e) {
     e.preventDefault();
     setEnviando(true);
     setStatus(null);
+
+    let imagemUrl = null;
+    if (arquivo) {
+      const extensao = arquivo.type === 'image/png' ? 'png' : arquivo.type === 'image/webp' ? 'webp' : 'jpg';
+      const caminho = `${crypto.randomUUID()}.${extensao}`;
+      const { error: falhaEnvio } = await supabase.storage
+        .from('noticias')
+        .upload(caminho, arquivo, { contentType: arquivo.type, cacheControl: '31536000' });
+      if (falhaEnvio) {
+        setEnviando(false);
+        setStatus(erro('Não foi possível enviar a imagem. Tente novamente.'));
+        return;
+      }
+      imagemUrl = supabase.storage.from('noticias').getPublicUrl(caminho).data.publicUrl;
+    }
+
     const { error } = await supabase.from('noticias').insert({
       titulo: dados.titulo,
       resumo: dados.resumo,
       conteudo: dados.conteudo,
-      imagem_url: dados.imagem_url || null,
+      imagem_url: imagemUrl,
       publicado: dados.publicado,
       publicado_em: dados.publicado ? new Date().toISOString() : null,
     });
     setEnviando(false);
     if (error) return setStatus(erro('Não foi possível salvar a notícia. Verifique os campos.'));
+
     setDados(vazio);
+    setArquivo(null);
+    setPrevia(null);
+    e.target.reset();
     setStatus(sucesso('Notícia salva.'));
   }
 
@@ -44,9 +97,13 @@ function NoticiaForm() {
       <div className="field"><label htmlFor="n-titulo">Título</label><input id="n-titulo" required value={dados.titulo} onChange={alterar('titulo')} /></div>
       <div className="field"><label htmlFor="n-resumo">Resumo</label><textarea id="n-resumo" required rows={2} value={dados.resumo} onChange={alterar('resumo')} /></div>
       <div className="field"><label htmlFor="n-conteudo">Texto completo</label><textarea id="n-conteudo" required rows={6} value={dados.conteudo} onChange={alterar('conteudo')} /></div>
-      <div className="field"><label htmlFor="n-imagem">Endereço da imagem (opcional)</label><input id="n-imagem" type="url" value={dados.imagem_url} onChange={alterar('imagem_url')} /></div>
+      <div className="field">
+        <label htmlFor="n-imagem">Imagem de capa (opcional, até 2 MB, JPG, PNG ou WebP)</label>
+        <input id="n-imagem" type="file" accept="image/jpeg,image/png,image/webp" onChange={escolherImagem} />
+      </div>
+      {previa && <img src={previa} alt="Pré-visualização da imagem de capa" className="upload-preview" />}
       <label className="checkbox"><input type="checkbox" checked={dados.publicado} onChange={alterar('publicado')} /> Publicar agora</label>
-      <button type="submit" className="button button-primary" disabled={enviando}><Save size={18} aria-hidden="true" /> Salvar notícia</button>
+      <button type="submit" className="button button-primary" disabled={enviando}><Save size={18} aria-hidden="true" /> {enviando ? 'Salvando...' : 'Salvar notícia'}</button>
       <Feedback status={status} />
     </form>
   );
