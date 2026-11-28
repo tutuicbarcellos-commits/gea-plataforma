@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
-import { CalendarDays, Newspaper, Megaphone, UserRound, ArrowRight, Inbox } from 'lucide-react';
+import { CalendarDays, ClipboardCheck, Megaphone, Newspaper, ArrowRight, Inbox } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { CATEGORIAS } from '../lib/categorias.js';
 import EmptyState from '../components/EmptyState.jsx';
-import TiltLink from '../components/TiltLink.jsx';
-import { SkeletonLines } from '../components/Skeleton.jsx';
 import HeroIllustration from '../components/HeroIllustration.jsx';
+import { SkeletonLines } from '../components/Skeleton.jsx';
 import '../styles/home.css';
 
 const formatarData = (valor) =>
@@ -16,13 +15,6 @@ const formatarData = (valor) =>
 
 const formatarHora = (valor) =>
   new Date(valor).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
-const ATALHOS = [
-  { to: '/calendario', rotulo: 'Calendário', Icone: CalendarDays, classe: 'icon-turquoise' },
-  { to: '/jornal', rotulo: 'Jornal do GEA', Icone: Newspaper, classe: 'icon-pink' },
-  { to: '/coordenacao', rotulo: 'Coordenação', Icone: Megaphone, classe: 'icon-yellow' },
-  { to: '/area-do-estudante', rotulo: 'Minha área', Icone: UserRound, classe: 'icon-deep' },
-];
 
 export default function HomePage() {
   usePageMeta({
@@ -35,6 +27,10 @@ export default function HomePage() {
     () => supabase.from('eventos').select('*').gte('inicio', agora).order('inicio').limit(4),
     [],
   );
+  const avaliacoes = useSupabaseQuery(
+    () => supabase.from('eventos').select('*').eq('categoria', 'avaliacao').gte('inicio', agora).order('inicio').limit(1),
+    [],
+  );
   const noticias = useSupabaseQuery(
     () => supabase.from('noticias').select('id, titulo, resumo, publicado_em').eq('publicado', true).order('publicado_em', { ascending: false }).limit(3),
     [],
@@ -44,7 +40,11 @@ export default function HomePage() {
     [],
   );
 
-  const saudacao = usuarioLogado && perfil?.nome ? `Olá, ${perfil.nome}` : 'Bem-vindo à plataforma do GEA';
+  const saudacao = usuarioLogado && perfil?.nome ? `Olá, ${perfil.nome}` : 'Tudo do Grêmio em um só lugar';
+  const proximoEvento = eventos.data?.[0];
+  const proximaAvaliacao = avaliacoes.data?.[0];
+  const ultimoAviso = comunicados.data?.[0];
+  const ultimaNoticia = noticias.data?.[0];
 
   return (
     <div className="container home">
@@ -55,25 +55,29 @@ export default function HomePage() {
             Acompanhe avaliações, entregas, eventos e comunicados do Grêmio Estudantil em um só lugar.
           </p>
           <div className="home-hero-actions">
-            <Link className="btn-deep" to="/calendario">
+            <Link className="button button-primary" to="/calendario">
               Ver calendário <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <Link className="btn-ghost" to="/jornal">Ler o Jornal do GEA</Link>
+            <Link className="button button-outline" to="/jornal">Ler o Jornal do GEA</Link>
           </div>
         </div>
         <HeroIllustration />
       </section>
 
-      <nav className="home-shortcuts" aria-label="Atalhos principais">
-        {ATALHOS.map(({ to, rotulo, Icone, classe }) => (
-          <TiltLink key={to} to={to} className="home-shortcut tilt">
-            <span className={`home-shortcut-icon ${classe}`}>
-              <Icone size={20} aria-hidden="true" />
-            </span>
-            {rotulo}
-          </TiltLink>
-        ))}
-      </nav>
+      <section className="home-info" aria-label="Resumo">
+        <InfoCard icone={CalendarDays} classe="icon-blue" rotulo="Próximo evento"
+          titulo={proximoEvento?.titulo} texto={proximoEvento ? `${formatarData(proximoEvento.inicio)}, ${formatarHora(proximoEvento.inicio)}` : null}
+          vazio="Nenhum evento cadastrado" carregando={eventos.loading} to="/calendario" />
+        <InfoCard icone={ClipboardCheck} classe="icon-pink" rotulo="Próxima avaliação"
+          titulo={proximaAvaliacao?.titulo} texto={proximaAvaliacao ? formatarData(proximaAvaliacao.inicio) : null}
+          vazio="Nenhuma avaliação cadastrada" carregando={avaliacoes.loading} to="/calendario" />
+        <InfoCard icone={Megaphone} classe="icon-pink" rotulo="Último aviso"
+          titulo={ultimoAviso?.titulo} texto={ultimoAviso?.mensagem}
+          vazio="Nenhum aviso cadastrado" carregando={comunicados.loading} to="/coordenacao" />
+        <InfoCard icone={Newspaper} classe="icon-blue" rotulo="Última notícia"
+          titulo={ultimaNoticia?.titulo} texto={ultimaNoticia?.resumo}
+          vazio="Nenhuma notícia publicada" carregando={noticias.loading} to="/jornal" />
+      </section>
 
       <div className="home-grid">
         <section className="home-panel" aria-labelledby="titulo-proximos">
@@ -130,5 +134,20 @@ export default function HomePage() {
         </section>
       </div>
     </div>
+  );
+}
+
+function InfoCard({ icone: Icone, classe, rotulo, titulo, texto, vazio, carregando, to }) {
+  return (
+    <Link to={to} className="home-info-card">
+      <span className={`home-info-icon ${classe}`}>
+        <Icone size={22} aria-hidden="true" />
+      </span>
+      <p className="home-info-label">{rotulo}</p>
+      {carregando && <SkeletonLines linhas={2} />}
+      {!carregando && titulo && <p className="home-info-title">{titulo}</p>}
+      {!carregando && texto && <p className="home-info-text">{texto}</p>}
+      {!carregando && !titulo && <p className="home-info-text">{vazio}</p>}
+    </Link>
   );
 }

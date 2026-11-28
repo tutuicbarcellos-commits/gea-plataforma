@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import DemoBanner from './DemoBanner.jsx';
 
 const institucional = [
   { to: '/apresentacao', rotulo: 'Sobre o GEA' },
@@ -12,6 +13,7 @@ const institucional = [
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <DemoBanner />
       <div className="container footer-inner">
         <p className="footer-brand">GEA | Chapa Connecta. Grêmio Estudantil.</p>
         <nav aria-label="Links institucionais">

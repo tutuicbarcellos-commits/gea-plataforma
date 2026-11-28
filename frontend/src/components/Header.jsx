@@ -9,7 +9,7 @@ const links = [
   { to: '/jornal', label: 'Jornal do GEA' },
   { to: '/projetos', label: 'Projetos' },
   { to: '/coordenacao', label: 'Coordenação' },
-  { to: '/area-do-estudante', label: 'Área do estudante' },
+  { to: '/area-do-estudante', label: 'Minha área' },
 ];
 
 export default function Header() {

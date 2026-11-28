@@ -13,6 +13,8 @@ const MESES = [
   'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
 ];
 
+const capitalizar = (texto) => texto.charAt(0).toUpperCase() + texto.slice(1);
+
 const inicioMes = (d) => new Date(d.getFullYear(), d.getMonth(), 1);
 const fimMes = (d) => new Date(d.getFullYear(), d.getMonth() + 1, 1);
 const inicioSemana = (d) => {
@@ -52,7 +54,9 @@ const formatarDataLonga = (valor) =>
 
 export default function CalendarPage() {
   usePageMeta({ titulo: 'Calendário escolar', descricao: 'Avaliações, entregas, eventos e atividades do Grêmio Estudantil.' });
-  const [visao, setVisao] = useState('mes');
+  const [visao, setVisao] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 899px)').matches ? 'lista' : 'mes',
+  );
   const [cursor, setCursor] = useState(() => new Date());
   const hoje = new Date();
 
@@ -82,7 +86,7 @@ export default function CalendarPage() {
   const titulo =
     visao === 'semana'
       ? `Semana de ${inicioSemana(cursor).toLocaleDateString('pt-BR')}`
-      : `${MESES[cursor.getMonth()]} de ${cursor.getFullYear()}`;
+      : `${capitalizar(MESES[cursor.getMonth()])} de ${cursor.getFullYear()}`;
 
   const semana = Array.from({ length: 7 }, (_, i) => {
     const dia = inicioSemana(cursor);
@@ -104,6 +108,7 @@ export default function CalendarPage() {
             <ChevronRight size={20} aria-hidden="true" />
           </button>
         </div>
+        <button type="button" className="button button-outline" onClick={() => setCursor(new Date())}>Hoje</button>
         <div className="segmented" role="group" aria-label="Modo de visualização">
           {[
             { id: 'mes', rotulo: 'Mês' },

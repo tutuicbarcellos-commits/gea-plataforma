@@ -3,6 +3,7 @@ import { Eye, EyeOff, Trash2 } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import Feedback from './Feedback.jsx';
+import ConfirmDialog from './ConfirmDialog.jsx';
 
 const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -10,6 +11,7 @@ const formatarData = (valor) =>
 export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPublicado, campoData, ordem, ascendente = false }) {
   const [versao, setVersao] = useState(0);
   const [status, setStatus] = useState(null);
+  const [pendente, setPendente] = useState(null);
 
   const { data, loading, error } = useSupabaseQuery(
     () => supabase.from(tabela).select('*').order(ordem, { ascending: ascendente }),
@@ -29,9 +31,13 @@ export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPub
     setVersao((v) => v + 1);
   }
 
-  async function excluir(item) {
-    const confirmado = window.confirm(`Excluir "${item[campoTitulo]}"? Esta ação não pode ser desfeita.`);
-    if (!confirmado) return;
+  function pedirExclusao(item) {
+    setPendente(item);
+  }
+
+  async function confirmarExclusao() {
+    const item = pendente;
+    setPendente(null);
     const { error: falha } = await supabase.from(tabela).delete().eq('id', item.id);
     if (falha) return setStatus({ tipo: 'erro', texto: 'Não foi possível excluir o item.' });
     setStatus({ tipo: 'sucesso', texto: 'Item excluído.' });
@@ -62,7 +68,7 @@ export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPub
                   {item[campoPublicado] ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                 </button>
               )}
-              <button type="button" className="icon-button icon-button-danger" aria-label={`Excluir ${item[campoTitulo]}`} onClick={() => excluir(item)}>
+              <button type="button" className="icon-button icon-button-danger" aria-label={`Excluir ${item[campoTitulo]}`} onClick={() => pedirExclusao(item)}>
                 <Trash2 size={18} aria-hidden="true" />
               </button>
             </div>
@@ -70,6 +76,13 @@ export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPub
         ))}
       </ul>
       <Feedback status={status} />
+      <ConfirmDialog
+        aberto={pendente !== null}
+        titulo="Excluir item"
+        mensagem={pendente ? `Excluir "${pendente[campoTitulo]}"? Esta ação não pode ser desfeita.` : ''}
+        onConfirmar={confirmarExclusao}
+        onCancelar={() => setPendente(null)}
+      />
     </section>
   );
 }

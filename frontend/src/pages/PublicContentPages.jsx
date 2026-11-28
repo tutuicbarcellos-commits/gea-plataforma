@@ -75,9 +75,9 @@ export function ProjetosPage() {
       <h1>Projetos</h1>
       <p className="muted">Acompanhe o andamento dos projetos desenvolvidos pelo Grêmio Estudantil.</p>
       {loading && <SkeletonLines linhas={3} />}
-      {error && <p className="feedback feedback-erro">Não foi possível carregar os projetos.</p>}
+      {error && <EmptyState icon={FolderKanban} title="Em breve" text="Os projetos do Grêmio vão aparecer aqui." />}
       {!loading && !error && itens.length === 0 && (
-        <EmptyState icon={FolderKanban} title="Nenhum projeto publicado" text="Os projetos publicados pelo Grêmio aparecerão aqui." />
+        <EmptyState icon={FolderKanban} title="Em breve" text="Os projetos do Grêmio vão aparecer aqui." />
       )}
       <div className="content-grid">
         {itens.map((item) => {
