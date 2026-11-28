@@ -5,6 +5,15 @@ import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import Feedback from './Feedback.jsx';
 import ConfirmDialog from './ConfirmDialog.jsx';
 
+const MARCADOR_IMAGEM = '/storage/v1/object/public/noticias/';
+
+/** Extrai o nome do arquivo no bucket a partir do endereco publico. Imagens fora do bucket retornam null. */
+function caminhoDaImagem(url) {
+  const posicao = url.indexOf(MARCADOR_IMAGEM);
+  if (posicao === -1) return null;
+  return decodeURIComponent(url.slice(posicao + MARCADOR_IMAGEM.length).split('?')[0]);
+}
+
 const formatarData = (valor) =>
   new Date(valor).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
@@ -40,6 +49,17 @@ export default function ListaGerenciavel({ titulo, tabela, campoTitulo, campoPub
     setPendente(null);
     const { error: falha } = await supabase.from(tabela).delete().eq('id', item.id);
     if (falha) return setStatus({ tipo: 'erro', texto: 'Não foi possível excluir o item.' });
+
+    if (tabela === 'noticias' && item.imagem_url) {
+      const caminho = caminhoDaImagem(item.imagem_url);
+      if (caminho) {
+        const { error: falhaImagem } = await supabase.storage.from('noticias').remove([caminho]);
+        if (falhaImagem) {
+          setVersao((v) => v + 1);
+          return setStatus({ tipo: 'erro', texto: 'Notícia excluída, mas a imagem não pôde ser removida do armazenamento.' });
+        }
+      }
+    }
     setStatus({ tipo: 'sucesso', texto: 'Item excluído.' });
     setVersao((v) => v + 1);
   }
