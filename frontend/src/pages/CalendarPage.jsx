@@ -55,7 +55,7 @@ const formatarDataLonga = (valor) =>
 export default function CalendarPage() {
   usePageMeta({ titulo: 'Calendário escolar', descricao: 'Avaliações, entregas, eventos e atividades do Grêmio Estudantil.' });
   const [visao, setVisao] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(max-width: 899px)').matches ? 'lista' : 'mes',
+    typeof window !== 'undefined' && window.matchMedia?.('(max-width: 899px)')?.matches ? 'lista' : 'mes',
   );
   const [cursor, setCursor] = useState(() => new Date());
   const hoje = new Date();

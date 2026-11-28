@@ -39,6 +39,13 @@ function renderizar(rota) {
   );
 }
 
+window.matchMedia = window.matchMedia ?? ((consulta) => ({
+  matches: false,
+  media: consulta,
+  addEventListener() {},
+  removeEventListener() {},
+}));
+
 const ROTAS_PUBLICAS = [
   '/',
   '/calendario',
