@@ -24,7 +24,10 @@ export default function NoticiaPage() {
       {loading && <p className="muted">Carregando notícia...</p>}
       {error && <p className="feedback feedback-erro">Não foi possível carregar a notícia.</p>}
       {!loading && !error && !noticia && (
-        <EmptyState icon={SearchX} title="Notícia não encontrada" text="Ela pode ter sido removida ou ainda não foi publicada." />
+        <>
+          <h1>Notícia não encontrada</h1>
+          <EmptyState icon={SearchX} title="Esta notícia não está disponível" text="Ela pode ter sido removida ou ainda não foi publicada." />
+        </>
       )}
 
       {noticia && (

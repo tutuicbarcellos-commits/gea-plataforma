@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App.jsx';
 import { AuthProvider } from '../hooks/useAuth.jsx';
@@ -7,7 +7,7 @@ import { AuthProvider } from '../hooks/useAuth.jsx';
 vi.mock('../lib/supabase.js', () => {
   const consulta = () => {
     const builder = {};
-    for (const metodo of ['select', 'eq', 'gte', 'lt', 'order', 'limit', 'insert', 'update', 'delete']) {
+    for (const metodo of ['select', 'eq', 'gte', 'lt', 'order', 'limit', 'insert', 'update', 'delete', 'ilike']) {
       builder[metodo] = () => builder;
     }
     builder.maybeSingle = () => Promise.resolve({ data: null, error: null });
@@ -57,11 +57,14 @@ const ROTAS_PUBLICAS = [
   '/participacao',
   '/coordenacao',
   '/privacidade',
+  '/busca',
   '/entrar',
   '/rota-inexistente',
 ];
 
 describe('rotas publicas', () => {
+  afterEach(() => cleanup());
+
   for (const rota of ROTAS_PUBLICAS) {
     it(`renderiza ${rota} com titulo principal`, async () => {
       renderizar(rota);

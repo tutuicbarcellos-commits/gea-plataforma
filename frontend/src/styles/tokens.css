@@ -10,6 +10,9 @@
   --color-deep: #244B68;
   --color-white: #FFFFFF;
 
+  /* Azul vibrante extraido da logo (#00A8E8). Usado em formas decorativas e indicadores, nunca como fundo de texto. */
+  --color-blue-vivid: #00A8E8;
+
   /* Leitura e contraste */
   --color-teal-text: #0F6F83;
   --color-pink-text: #A3286F;
