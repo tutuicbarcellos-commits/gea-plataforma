@@ -91,6 +91,7 @@
     background: var(--color-blue-vivid);
   }
   .sidebar-link svg { color: var(--color-teal-text); }
+  .sidebar-art { display: block; width: calc(100% + 2rem); margin: auto -1rem -1.25rem; height: auto; }
 
   .site-header { display: none; }
 

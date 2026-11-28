@@ -5,6 +5,9 @@ import { useSupabaseQuery } from '../hooks/useSupabaseQuery.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import { CATEGORIAS } from '../lib/categorias.js';
 import MonthCalendar from '../components/MonthCalendar.jsx';
+import HeroDecor from '../components/HeroDecor.jsx';
+import FeatureIllustration from '../components/FeatureIllustration.jsx';
+import StarCluster from '../components/StarCluster.jsx';
 import { SkeletonLines } from '../components/Skeleton.jsx';
 import '../styles/home.css';
 
@@ -14,10 +17,10 @@ const formatarHora = (valor) =>
   new Date(valor).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
 const FUNCIONALIDADES = [
-  { to: '/calendario', titulo: 'Eventos', texto: 'Compromissos, avaliações e entregas.', Icone: CalendarDays, classe: 'tone-blue' },
-  { to: '/coordenacao', titulo: 'Comunicados', texto: 'Avisos da coordenação e do Grêmio.', Icone: Megaphone, classe: 'tone-pink' },
-  { to: '/propostas', titulo: 'Propostas', texto: 'Ideias apresentadas pelo Grêmio.', Icone: Lightbulb, classe: 'tone-yellow' },
-  { to: '/participacao', titulo: 'Participe', texto: 'Envie sugestões e dúvidas.', Icone: Users, classe: 'tone-blue' },
+  { to: '/calendario', titulo: 'Eventos', texto: 'Compromissos, avaliações e entregas.', tipo: 'eventos' },
+  { to: '/coordenacao', titulo: 'Comunicados', texto: 'Avisos da coordenação e do Grêmio.', tipo: 'comunicados' },
+  { to: '/propostas', titulo: 'Propostas', texto: 'Ideias apresentadas pelo Grêmio.', tipo: 'propostas' },
+  { to: '/participacao', titulo: 'Participe', texto: 'Envie sugestões e dúvidas.', tipo: 'participe' },
 ];
 
 export default function HomePage() {
@@ -44,6 +47,7 @@ export default function HomePage() {
   return (
     <div className="home">
       <section className="hero" aria-labelledby="titulo-inicio">
+        <HeroDecor />
         <div className="hero-copy">
           <p className="hero-badge"><Star size={16} aria-hidden="true" /> Grêmio Estudantil</p>
           <h1 id="titulo-inicio">Chapa <span className="hero-accent">Conecta</span></h1>
@@ -90,9 +94,9 @@ export default function HomePage() {
       </section>
 
       <section className="feature-row" aria-label="Funcionalidades">
-        {FUNCIONALIDADES.map(({ to, titulo, texto, Icone, classe }) => (
+        {FUNCIONALIDADES.map(({ to, titulo, texto, tipo }) => (
           <Link key={to} to={to} className="feature-card">
-            <span className={`feature-icon ${classe}`}><Icone size={22} aria-hidden="true" /></span>
+            <span className="feature-illustration"><FeatureIllustration tipo={tipo} /></span>
             <span className="feature-text">
               <strong>{titulo}</strong>
               <span>{texto}</span>
@@ -116,6 +120,7 @@ export default function HomePage() {
 
         <aside className="home-side" aria-label="Próximos eventos e participação">
           <section className="side-card side-invite">
+            <StarCluster />
             <h2>Participe do Grêmio</h2>
             <p>Envie dúvidas e sugestões e acompanhe as propostas e os projetos.</p>
             <Link to="/participacao" className="button button-primary">Enviar sugestão</Link>

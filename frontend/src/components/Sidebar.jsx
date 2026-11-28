@@ -30,6 +30,11 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
+      <svg className="sidebar-art" viewBox="0 0 240 150" aria-hidden="true" focusable="false">
+        <path d="M0 70c40-30 80-30 120 0s80 30 120-5v85H0z" style={{ fill: 'var(--color-sky)' }} />
+        <path d="M0 100c50-20 90-20 130 5s70 20 110-5v50H0z" style={{ fill: 'var(--color-pink-soft)' }} />
+        <circle cx="200" cy="34" r="8" style={{ fill: 'var(--color-pink)' }} />
+      </svg>
     </aside>
   );
 }
